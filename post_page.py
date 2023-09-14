@@ -78,7 +78,7 @@ def run_task_page():
                 
             if  st.button("Atualizar"):
                     edit_task_data(novo_colaborador,nova_funcao,nova_atividade,nova_data,colaborador,funcao,atividade,data)
-                    st.success("Adicionado:: {}".format(colaborador))
+                    st.success("💻 {} atualizado com sucesso! 💻".format(colaborador))
             
             #st.write("Escolha alguém")
             #hadouken = mobile()

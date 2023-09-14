@@ -1,11 +1,11 @@
 import streamlit as st
-#from home_page import run_home_page
+from home_page import run_home_page
 from post_page import run_task_page
 from manage_page import run_manage_page
 from PIL import Image
 
-logo = Image.open('./img/logodesa2.png')
-st.image(logo, width=200)
+logo = Image.open('./img/background.png')
+st.image(logo, use_column_width=True)
 
 def application():
     
@@ -15,7 +15,7 @@ def application():
     
     if choice == "Home":
         st.subheader("Home")
-        #run_home_page()
+        run_home_page()
         
     elif choice == "Atividades":
         st.subheader("Atividades realizadas")

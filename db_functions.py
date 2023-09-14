@@ -50,3 +50,13 @@ def delete_data(colaborador):
     c.execute('DELETE FROM tasktable WHERE colaborador = "{}"'.format(colaborador))
     #c.execute('DELETE FROM tasktable WHERE colaborador= ?',(colaborador))
     conn.commit()
+
+def get_task_by_worker_initial_name(colaborador):
+    c.execute("SELECT * FROM tasktable WHERE substr(colaborador, 1, 4) = ?", (colaborador,))
+    dados = c.fetchall()
+    return dados
+
+def get_task_by_task_name(atividade):
+    c.execute('SELECT * FROM tasktable WHERE atividade = "{}"'.format(atividade))
+    dados = c.fetchall()
+    return dados
