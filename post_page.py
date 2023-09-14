@@ -1,6 +1,8 @@
 # Create and Edit/Update
 import streamlit as st
-from db_functions import create_table, add_data, view_all_tasks
+from datetime import datetime
+from db_functions import (create_table, add_data, view_all_tasks,view_all_worker_names, view_all_unique_worker_names,
+                          get_task_by_worker_name, edit_task_data, mobile)
 
 def run_task_page():
     st.subheader("Preencher e Atualizar Atividades")
@@ -15,20 +17,73 @@ def run_task_page():
             funcao = st.text_input("Função")
             
         with col2:
-            data = st.date_input("Data",format="DD/MM/YYYY")
-            atividade = st.selectbox("Atividade",["0000","0001","0003","0004","0005","0008","0012","0193",
-                                                "0690","0744","0827","0832","0841","1049","1070","1132",
-                                                "1212","1241","1273","1288","1347","1399","1453","1457",
-                                                "1462","1492","1517","1548","1584","1589","2003","2027",
-                                                "2034","2037","2052","2072","2078","2088","2105","2112",
-                                                "2130","2163","2184","2231","2236","2241","2250","2271",
-                                                "2328","2335","2376","2392","2394","2413","2452","2478","2479",
-                                                "2500","2501","2518","2539","2540","3011","3052","3118","3139",
-                                                "3182","3198","3199","3200","3206","3218"])
+            data_padrao = st.date_input("Data",format='DD/MM/YYYY')
+            data_obj = datetime.strftime(data_padrao,'%d/%m/%Y')
+            data = data_obj
+            atividade = st.text_input("Atividade")
             
         if st.button("Adicionar"):
             add_data(colaborador,funcao,atividade,data)
             st.success("Adicionado:: {}".format(colaborador))
         
-        results = view_all_tasks()  
-        st.write(results)
+        #results = view_all_tasks()  
+        #st.write(results)
+        
+    elif submenu == "Editar":
+        st.subheader("Atualizar/Editar atividade")
+        
+        list_of_tasks = [i[0] for i in view_all_worker_names()]
+        selected_task = st.selectbox("Colaborador:",list_of_tasks)
+        task_result = get_task_by_worker_name(selected_task)
+        st.write(task_result)
+        if task_result:
+            colaborador = task_result[0][0]
+            funcao = task_result[0][1]
+            atividade = task_result[0][2]
+            data = task_result[0][3]
+    
+            col1,col2 = st.columns(2)
+        
+            with col1:
+                novo_colaborador = st.text_input("Colaborador",colaborador)
+                nova_funcao = st.text_input("Função", funcao)
+                
+            with col2:
+                data_padrao2 = st.date_input("Data",format='DD/MM/YYYY')
+                data_obj2 = datetime.strftime(data_padrao2,'%d/%m/%Y')
+                nova_data = data_obj2
+                nova_atividade = st.text_input("Atividade",atividade)
+                if nova_atividade == "":
+                    st.warning("FUNCIONÁRIO OCIOSO", icon="⚠️")
+                    
+                    sub_col1, sub_col2 = st.columns(2)
+                    
+                    with sub_col1:
+                        opcoes = st.radio(
+                            "Informe o motivo:",
+                            ["Atestado","Falta","Mobilizaçao"],
+                            captions= ["Envie no atestado médico","Justifique o motivo", "Conferir na aba OCIOSIDADE"]
+                        )
+                        
+                    with sub_col2:
+                        if opcoes == "Atestado":
+                            st.info('📋 Não esqueça de enviar o atestado. Vá ao menu "Gerenciamento", clique em Atestados')
+                        elif opcoes == "Falta":
+                            detalhes = st.text_area('👷🏽‍♂️ ***Justifique com poucas palavras***')
+                            opcoes = "Falta: {}".format(detalhes)
+                        else:
+                            st.info("🚀 Após você atualizar esses dados, verifique se o(a) colabor(a) estará na aba OCIOSOS.")
+                            
+                        nova_atividade = opcoes
+                
+            if  st.button("Atualizar"):
+                    edit_task_data(novo_colaborador,nova_funcao,nova_atividade,nova_data,colaborador,funcao,atividade,data)
+                    st.success("Adicionado:: {}".format(colaborador))
+            
+            #st.write("Escolha alguém")
+            #hadouken = mobile()
+            #for colaborador in hadouken:
+            #    st.checkbox(colaborador[0])  
+            
+if __name__ == '__run_task_page__':
+    run_task_page()
