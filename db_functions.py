@@ -15,8 +15,8 @@ def add_data(colaborador,funcao,atividade,data):
     conn.commit()
     
 def view_all_tasks():
-    #c.execute('SELECT * FROM tasktable')
-    c.execute("SELECT colaborador, funcao, atividade, strftime('%d/%m/%Y', data) as data FROM tasktable")
+    c.execute('SELECT * FROM tasktable')
+    #c.execute("SELECT colaborador, funcao, atividade, strftime('%d/%m/%Y', data) as data FROM tasktable")
     dados = c.fetchall()
     return dados
 
@@ -45,3 +45,8 @@ def mobile():
     c.execute('SELECT colaborador FROM tasktable where atividade = "Mobilizaçao"')
     dados = c.fetchall()
     return dados
+
+def delete_data(colaborador):
+    c.execute('DELETE FROM tasktable WHERE colaborador = "{}"'.format(colaborador))
+    #c.execute('DELETE FROM tasktable WHERE colaborador= ?',(colaborador))
+    conn.commit()

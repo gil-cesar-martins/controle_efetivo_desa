@@ -1,7 +1,7 @@
 import streamlit as st
 #from home_page import run_home_page
 from post_page import run_task_page
-#from manage_page import run_manage_page
+from manage_page import run_manage_page
 from PIL import Image
 
 logo = Image.open('./img/logodesa2.png')
@@ -23,7 +23,7 @@ def application():
         
     elif choice == "Gerenciamento":
         st.subheader("Gerenciamento")
-        #run_manage_page()
+        run_manage_page()
     else:
         st.subheader("Sobre o App")
 
