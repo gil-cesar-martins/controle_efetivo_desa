@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import datetime
 from db_functions import (create_table, add_data, view_all_tasks,view_all_worker_names, view_all_unique_worker_names,
-                          get_task_by_worker_name, edit_task_data, mobile,delete_data)
+                          get_task_by_worker_name, edit_task_data, mobile,delete_data, get_task_by_date)
 
 import pandas as pd
 import plotly.express as px
@@ -33,12 +33,29 @@ def run_manage_page():
             st.dataframe(new_df)         
         
     else:
-        st.subheader("Análise",divider='rainbow')
         result = view_all_tasks()
         df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data'])
         
-        with st.expander("Ver todo o efetivo"):
+        with st.expander("Ver todos os registros"):
             st.dataframe(df)
             
         with st.expander("Status das Obras/Atividades"):
-            st.dataframe(df['Atividade'].value_counts())
+            
+            
+            data_inicio = st.date_input("Selecione uma data",format="DD/MM/YYYY")
+            data_search = data_inicio.strftime("%d/%m/%Y")
+            if st.button("Procurar"):
+                st.info("Você selecionou a data {}".format(data_search))
+                search_result = get_task_by_date(data_search)
+                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data'])
+                st.dataframe(df) 
+                st.subheader("Análise das Atividades",divider='rainbow')
+                st.dataframe(df['Atividade'].value_counts())
+                new_df = df['Atividade'].value_counts().to_frame()
+                new_df = new_df.reset_index()
+                #st.dataframe(new_df)
+                
+                st.bar_chart(new_df,x='Atividade',y='count',use_container_width=True, color="#830b67")
+            
+            
+            
