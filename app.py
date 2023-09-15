@@ -14,18 +14,17 @@ def application():
     choice = st.sidebar.selectbox("Menu", menu)
     
     if choice == "Home":
-        st.subheader("Home")
+        st.subheader("Acompanhamento",divider='rainbow')
         run_home_page()
         
     elif choice == "Atividades":
-        st.subheader("Atividades realizadas")
         run_task_page()
         
     elif choice == "Gerenciamento":
-        st.subheader("Gerenciamento")
+        st.subheader("Gerenciamento",divider='rainbow')
         run_manage_page()
     else:
-        st.subheader("Sobre o App")
+        st.subheader("Sobre o App",divider='rainbow')
 
 if __name__ == '__main__':
     application()

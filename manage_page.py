@@ -33,7 +33,7 @@ def run_manage_page():
             st.dataframe(new_df)         
         
     else:
-        st.subheader("Análise")
+        st.subheader("Análise",divider='rainbow')
         result = view_all_tasks()
         df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data'])
         

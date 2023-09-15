@@ -30,6 +30,12 @@ def view_all_unique_worker_names():
     dados = c.fetchall()
     return dados
 
+def view_all_unique_task_names():
+    c.execute('SELECT DISTINCT atividade FROM tasktable')
+    dados = c.fetchall()
+    return dados
+
+
 def get_task_by_worker_name(colaborador):
     c.execute('SELECT colaborador, funcao, atividade, data FROM tasktable WHERE colaborador = "{}"'.format(colaborador))
     dados = c.fetchall()
@@ -51,12 +57,12 @@ def delete_data(colaborador):
     #c.execute('DELETE FROM tasktable WHERE colaborador= ?',(colaborador))
     conn.commit()
 
-def get_task_by_worker_initial_name(colaborador):
-    c.execute("SELECT * FROM tasktable WHERE substr(colaborador, 1, 4) = ?", (colaborador,))
+def get_task_by_task_name(atividade):
+    c.execute('SELECT * FROM tasktable WHERE atividade = "{}"'.format(atividade))
     dados = c.fetchall()
     return dados
 
-def get_task_by_task_name(atividade):
-    c.execute('SELECT * FROM tasktable WHERE atividade = "{}"'.format(atividade))
+def get_task_by_date(data):
+    c.execute('SELECT * FROM tasktable WHERE data = "{}"'.format(data))
     dados = c.fetchall()
     return dados
