@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import datetime
 from db_functions import (create_table, add_data, view_all_tasks,view_all_worker_names, view_all_unique_worker_names,
-                          get_task_by_worker_name, edit_task_data, mobile,view_all_unique_task_names)
+                          get_task_by_worker_name, edit_task_data, mobile,view_all_unique_task_names,delete_data)
 
 def run_task_page():
     create_table()
@@ -61,7 +61,7 @@ def run_task_page():
                     with sub_col1:
                         opcoes = st.radio(
                             "Informe o motivo:",
-                            ["Atestado","Falta","Mobilizaçao"],
+                            ["Atestado","Falta","Desmobilizar"],
                             captions= ["Envie o atestado médico","Justifique o motivo", "Conferir na aba OCIOSIDADE"]
                         )
                         
@@ -72,7 +72,12 @@ def run_task_page():
                             detalhes = st.text_area('👷🏽‍♂️ ***Justifique com poucas palavras***')
                             opcoes = "Falta: {}".format(detalhes)
                         else:
-                            st.info("🚀 Após você atualizar esses dados, verifique se o(a) colabor(a) estará na aba OCIOSOS.")
+                            if "Desmobilizar" not in st.session_state:
+                                st.session_state = []
+                                st.session_state.append((colaborador, funcao, atividade, data))
+                                # Remova os dados do colaborador do banco de dados
+                                delete_data(colaborador, funcao, atividade, data)
+                                st.info("🚀 Após você atualizar esses dados, verifique se o(a) colabor(a) estará na aba OCIOSOS.")
                             
                         nova_atividade = opcoes
                 

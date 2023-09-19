@@ -48,7 +48,7 @@ def edit_task_data(novo_colaborador,nova_funcao,nova_atividade,nova_data,colabor
     return dados
 
 def mobile():
-    c.execute('SELECT colaborador FROM tasktable where atividade = "Mobilizaçao"')
+    c.execute('SELECT colaborador, funcao FROM tasktable where atividade = "Desmobilizar"')
     dados = c.fetchall()
     return dados
 
