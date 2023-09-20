@@ -21,6 +21,31 @@ def run_task_page():
             data = data_obj
             atividade = st.text_input("Atividade")
             
+            
+        if atividade == "":
+                    st.warning("FUNCIONÁRIO OCIOSO", icon="⚠️")
+                    
+                    sub_col1, sub_col2 = st.columns(2)
+                    
+                    with sub_col1:
+                        opcoes = st.radio(
+                            "Informe o motivo:",
+                            ["Atestado","Falta","Desmobilizar"],
+                            captions= ["Envie o atestado médico","Justifique o motivo", "Conferir na aba OCIOSIDADE"]
+                        )
+                        
+                    with sub_col2:
+                        if opcoes == "Atestado":
+                            st.info('📋 Não esqueça de enviar o atestado. Vá ao menu "Gerenciamento", clique em Atestados')
+                        elif opcoes == "Falta":
+                            detalhes = st.text_area('👷🏽‍♂️ ***Justifique com poucas palavras***')
+                            opcoes = "Falta: {}".format(detalhes)
+                        else:
+                            if "Desmobilizar" not in st.session_state:
+                                st.info("🚀 Após você atualizar esses dados, verifique se o(a) colabor(a) estará na aba OCIOSOS.")
+                            
+                        atividade = opcoes 
+            
         if st.button("Adicionar"):
             add_data(colaborador,funcao,atividade,data)
             st.success("Adicionado:: {}".format(colaborador))
@@ -34,7 +59,7 @@ def run_task_page():
         list_of_tasks = [i[0] for i in view_all_unique_worker_names()]
         selected_task = st.selectbox("Colaborador:",list_of_tasks)
         task_result = get_task_by_worker_name(selected_task)
-        st.write(task_result)
+        
         st.subheader("Atualizar/Editar Dados",divider='rainbow')
         if task_result:
             colaborador = task_result[0][0]
@@ -73,10 +98,6 @@ def run_task_page():
                             opcoes = "Falta: {}".format(detalhes)
                         else:
                             if "Desmobilizar" not in st.session_state:
-                                st.session_state = []
-                                st.session_state.append((colaborador, funcao, atividade, data))
-                                # Remova os dados do colaborador do banco de dados
-                                delete_data(colaborador, funcao, atividade, data)
                                 st.info("🚀 Após você atualizar esses dados, verifique se o(a) colabor(a) estará na aba OCIOSOS.")
                             
                         nova_atividade = opcoes

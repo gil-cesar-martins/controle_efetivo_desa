@@ -47,10 +47,18 @@ def edit_task_data(novo_colaborador,nova_funcao,nova_atividade,nova_data,colabor
     dados = c.fetchall()
     return dados
 
+def mobile_update():
+    c.execute('SELECT * FROM tasktable where atividade = "Desmobilizar"')
+    dados = c.fetchall()
+    c.execute('UPDATE tasktable SET atividade = "Mobilizar" WHERE atividade = "Desmobilizar"')
+    conn.commit()
+    return dados
+
 def mobile():
-    c.execute('SELECT colaborador, funcao FROM tasktable where atividade = "Desmobilizar"')
+    c.execute('SELECT * FROM tasktable where atividade = "Desmobilizar"')
     dados = c.fetchall()
     return dados
+
 
 def delete_data(colaborador):
     c.execute('DELETE FROM tasktable WHERE colaborador = "{}"'.format(colaborador))
