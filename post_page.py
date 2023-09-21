@@ -9,20 +9,21 @@ def run_task_page():
     submenu = st.sidebar.selectbox("Submenu",["Adicionar","Editar"])
     
     if submenu == "Adicionar":
-        col1,col2 = st.columns(2)
+        with st.form(key='Adicionar',clear_on_submit=True):
+            col1,col2 = st.columns(2)
         
-        with col1:
-            colaborador = st.text_input("Colaborador")
-            funcao = st.text_input("Função")
+            with col1:
+                colaborador = st.text_input("Colaborador")
+                funcao = st.text_input("Função")
             
-        with col2:
-            data_padrao = st.date_input("Data",format='DD/MM/YYYY')
-            data_obj = datetime.strftime(data_padrao,'%d/%m/%Y')
-            data = data_obj
-            atividade = st.text_input("Atividade")
+            with col2:
+                data_padrao = st.date_input("Data",format='DD/MM/YYYY')
+                data_obj = datetime.strftime(data_padrao,'%d/%m/%Y')
+                data = data_obj
+                atividade = st.text_input("Atividade")
             
             
-        if atividade == "":
+            if atividade == "":
                     st.warning("FUNCIONÁRIO OCIOSO", icon="⚠️")
                     
                     sub_col1, sub_col2 = st.columns(2)
@@ -45,13 +46,13 @@ def run_task_page():
                                 st.info("🚀 Após você atualizar esses dados, verifique se o(a) colabor(a) estará na aba OCIOSOS.")
                             
                         atividade = opcoes 
-            
-        if st.button("Adicionar"):
-            add_data(colaborador,funcao,atividade,data)
-            st.success("Adicionado:: {}".format(colaborador))
+            submit_button = st.form_submit_button("Adicionar")   
+            if submit_button:
+                add_data(colaborador,funcao,atividade,data)
+                st.success("Adicionado:: {}".format(colaborador))
         
-        #results = view_all_tasks()  
-        #st.write(results)
+            #results = view_all_tasks()  
+            #st.write(results)
         
     elif submenu == "Editar":
         st.subheader("Seleção de colaboradores",divider='rainbow')
