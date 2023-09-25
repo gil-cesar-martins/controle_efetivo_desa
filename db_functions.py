@@ -2,9 +2,7 @@ import sqlite3
 conn = sqlite3.connect("data.db", check_same_thread=False)
 c = conn.cursor()
 
-# Table
-# Table must have field/columns
-# Fied must datatype
+# Create  tasktable
 
 def create_table():
     c.execute('CREATE TABLE IF NOT EXISTS tasktable(colaborador TEXT, funcao TEXT, atividade TEXT, data DATE)')
@@ -14,14 +12,24 @@ def add_data(colaborador,funcao,atividade,data):
     #c.execute("INSERT INTO tasktable (colaborador, funcao, atividade, data) VALUES (?, ?, ?, strftime('%d/%m/%Y', 'now'))", (colaborador, funcao, atividade))
     conn.commit()
 
+# CREATE USER SECTION
 def create_user_password_table():
-    c.execute('CREATE TABLE IF NOT EXISTS user(username TEXT,password TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT, email TEXT, password TEXT)')
     
-def add_user(username,email,password,date_joined):
-    c.execute('INSERT INTO user(username,password) VALUES(?,?,?,?)',(username,email,password,date_joined))
+def add_user_data(username,email,password):
+    c.execute('INSERT INTO userstable(username,email,password) VALUES(?,?,?)',(username,email,password))
     conn.commit()
 
-    
+def login_user(username,password):
+    c.execute('SELECT * FROM userstable WHERE username=? AND password = ?',(username,password))
+    data = c.fetchall()
+    return data
+
+def view_all_users():
+    c.execute('SELECT * FROM userstable')
+    data = c.fetchall()
+    return data
+# End User Section  
 def view_all_tasks():
     c.execute('SELECT * FROM tasktable')
     #c.execute("SELECT colaborador, funcao, atividade, strftime('%d/%m/%Y', data) as data FROM tasktable")

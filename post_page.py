@@ -6,7 +6,7 @@ from db_functions import (create_table, add_data, view_all_tasks,view_all_worker
 
 def run_task_page():
     create_table()
-    submenu = st.sidebar.selectbox("Submenu",["Adicionar","Editar"])
+    submenu = st.selectbox("Submenu",["Adicionar","Editar"])
     
     if submenu == "Adicionar":
         with st.form(key='Adicionar',clear_on_submit=True):

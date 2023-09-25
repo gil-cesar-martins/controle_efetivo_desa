@@ -3,7 +3,7 @@ from db_functions import *
 import pandas as pd
 
 def run_home_page():
-    choice = st.sidebar.selectbox("SubMenu",["Efetivo", "Buscar"])
+    choice = st.selectbox("SubMenu",["Efetivo", "Buscar"])
     
     with st.expander("Clique para ver todo o efetivo"):
         result = view_all_tasks()
