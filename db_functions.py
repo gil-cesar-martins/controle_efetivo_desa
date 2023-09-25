@@ -29,7 +29,14 @@ def view_all_users():
     c.execute('SELECT * FROM userstable')
     data = c.fetchall()
     return data
-# End User Section  
+
+def choose_unique_username():
+    c.execute('SELECT DISTINCT username FROM userstable')
+    data = c.fetchall()
+    return data
+
+# End User Section
+  
 def view_all_tasks():
     c.execute('SELECT * FROM tasktable')
     #c.execute("SELECT colaborador, funcao, atividade, strftime('%d/%m/%Y', data) as data FROM tasktable")
@@ -74,7 +81,6 @@ def mobile():
     c.execute('SELECT * FROM tasktable where atividade = "Desmobilizar"')
     dados = c.fetchall()
     return dados
-
 
 def delete_data(colaborador):
     c.execute('DELETE FROM tasktable WHERE colaborador = "{}"'.format(colaborador))
