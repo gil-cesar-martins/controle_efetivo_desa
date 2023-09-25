@@ -8,11 +8,19 @@ c = conn.cursor()
 
 def create_table():
     c.execute('CREATE TABLE IF NOT EXISTS tasktable(colaborador TEXT, funcao TEXT, atividade TEXT, data DATE)')
-
+    
 def add_data(colaborador,funcao,atividade,data):
     c.execute('INSERT INTO tasktable(colaborador,funcao,atividade,data) VALUES(?,?,?,?)',(colaborador,funcao,atividade,data))
     #c.execute("INSERT INTO tasktable (colaborador, funcao, atividade, data) VALUES (?, ?, ?, strftime('%d/%m/%Y', 'now'))", (colaborador, funcao, atividade))
     conn.commit()
+
+def create_user_password_table():
+    c.execute('CREATE TABLE IF NOT EXISTS user(username TEXT,password TEXT)')
+    
+def add_user(username,email,password,date_joined):
+    c.execute('INSERT INTO user(username,password) VALUES(?,?,?,?)',(username,email,password,date_joined))
+    conn.commit()
+
     
 def view_all_tasks():
     c.execute('SELECT * FROM tasktable')
