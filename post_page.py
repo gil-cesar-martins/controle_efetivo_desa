@@ -1,13 +1,12 @@
 # Create and Edit/Update
 import streamlit as st
 from datetime import datetime
-from db_functions import (create_table, add_data, view_all_tasks,view_all_worker_names, view_all_unique_worker_names,
-                          get_task_by_worker_name, edit_task_data, mobile,view_all_unique_task_names,delete_data)
+from db_functions import *
 
 def run_task_page():
     create_table()
     submenu = st.selectbox("Submenu",["Adicionar","Editar"])
-    
+    st.subheader('Adicionar / Editar Atividades', divider='rainbow')
     if submenu == "Adicionar":
         with st.form(key='Adicionar',clear_on_submit=True):
             col1,col2 = st.columns(2)
@@ -21,6 +20,7 @@ def run_task_page():
                 data_obj = datetime.strftime(data_padrao,'%d/%m/%Y')
                 data = data_obj
                 atividade = st.text_input("Atividade")
+                responsavel = st.text_input("Responsável")
             
             
             if atividade == "":
@@ -48,7 +48,7 @@ def run_task_page():
                         atividade = opcoes 
             submit_button = st.form_submit_button("Adicionar")   
             if submit_button:
-                add_data(colaborador,funcao,atividade,data)
+                add_data(colaborador,funcao,atividade,data,responsavel)
                 st.success("Adicionado:: {}".format(colaborador))
         
             #results = view_all_tasks()  
@@ -67,7 +67,8 @@ def run_task_page():
             funcao = task_result[0][1]
             atividade = task_result[0][2]
             data = task_result[0][3]
-    
+            responsavel = task_result[0][4]
+
             col1,col2 = st.columns(2)
             
             with col1:
@@ -79,6 +80,7 @@ def run_task_page():
                 data_obj2 = datetime.strftime(data_padrao2,'%d/%m/%Y')
                 nova_data = data_obj2
                 nova_atividade = st.text_input("Atividade",atividade)
+                novo_responsavel = st.text_input("Responsável", responsavel)
                 if nova_atividade == "":
                     st.warning("FUNCIONÁRIO OCIOSO", icon="⚠️")
                     
@@ -104,9 +106,10 @@ def run_task_page():
                         nova_atividade = opcoes
                 
             if  st.button("Atualizar"):
-                    edit_task_data(novo_colaborador,nova_funcao,nova_atividade,nova_data,colaborador,funcao,atividade,data)
-                    add_data(colaborador,funcao,atividade,data)
+                    edit_task_data(novo_colaborador,nova_funcao,nova_atividade,nova_data,novo_responsavel,colaborador,funcao,atividade,data,responsavel)
+                    add_data(colaborador,funcao,atividade,data,responsavel)
                     st.success("💻 {} atualizado com sucesso! 💻".format(colaborador))
+                    
             
             #st.write("Escolha alguém")
             #hadouken = mobile()

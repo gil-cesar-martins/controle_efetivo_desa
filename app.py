@@ -3,12 +3,12 @@ from home_page import run_home_page
 from post_page import run_task_page
 from manage_page import run_manage_page_complete,run_manage_page_simple
 from mobi_page import run_mobi_page
-from db_functions import create_user_password_table, add_user_data, login_user, view_all_users
+from db_functions import create_user_password_table, add_user_data, login_user, view_all_users, query_user
 
 from PIL import Image
 
 def main():
-
+    username = []
     menu = ["Login"]
     choice1 = st.sidebar.selectbox("Menu",menu)
     
@@ -51,6 +51,8 @@ def main():
                 result = login_user(username,password)
                 if result:
                     st.success("Seja bem-vindo {} !".format(username))
+                    data = query_user(username)
+                    st.write(data)
                     task = st.selectbox("Selecione:",["Home","Atividades","Gerenciamento","Ociosidade","Sobre o App"])
 
                     if task == "Home":
@@ -72,7 +74,7 @@ def main():
                     elif task == "Sobre o App":
                         st.subheader("Saiba mais Sobre o App",divider='rainbow')
                 else:
-                    st.warning("Senha incorreta !")
+                    st.warning("Usuário ou Senha incorretos !")
         
 if __name__ == '__main__':
     main()

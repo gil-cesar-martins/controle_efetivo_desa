@@ -18,7 +18,7 @@ def run_manage_page_complete():
         
     if choice == "Análise":
         result = view_all_tasks()
-        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data'])
+        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
         
         with st.expander("Ver todos os registros"):
             st.dataframe(df)
@@ -30,7 +30,7 @@ def run_manage_page_complete():
             if st.button("Procurar"):
                 st.info("Você selecionou a data {}".format(data_search))
                 search_result = get_task_by_date(data_search)
-                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data'])
+                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
                 st.dataframe(df) 
                 st.subheader("Análise das Atividades",divider='rainbow')
                 st.dataframe(df['Atividade'].value_counts())
@@ -41,7 +41,7 @@ def run_manage_page_complete():
                 st.bar_chart(new_df,x='Atividade',y='count',use_container_width=True, color="#830b67")
     else:
         result = view_all_tasks()
-        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data'])
+        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
         st.dataframe(df)
         unique_list = [i[0] for i in view_all_unique_worker_names()]
         delete_by_worker_name = st.selectbox("Colaborador", unique_list)
@@ -52,7 +52,7 @@ def run_manage_page_complete():
         
         with st.expander("Banco de dados atual"):
             result2 = view_all_tasks()
-            new_df = pd.DataFrame(result2, columns=['Colaborador','Função','Atividade','Data'])
+            new_df = pd.DataFrame(result2, columns=['Colaborador','Função','Atividade','Data','Responsável'])
             st.dataframe(new_df)  
         
 def run_manage_page_simple():
@@ -61,7 +61,7 @@ def run_manage_page_simple():
         
     if choice == "Análise":
         result = view_all_tasks()
-        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data'])
+        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
         
         with st.expander("Ver todos os registros"):
             st.dataframe(df)
@@ -73,7 +73,7 @@ def run_manage_page_simple():
             if st.button("Procurar"):
                 st.info("Você selecionou a data {}".format(data_search))
                 search_result = get_task_by_date(data_search)
-                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data'])
+                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
                 st.dataframe(df) 
                 st.subheader("Análise das Atividades",divider='rainbow')
                 st.dataframe(df['Atividade'].value_counts())
