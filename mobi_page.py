@@ -4,6 +4,7 @@ from db_functions import *
 import pandas as pd
 from datetime import datetime
 
+
 def run_mobi_page():
 # Chame a sua função mobile e armazene os dados em uma variável
     dados = mobile()
@@ -13,11 +14,10 @@ def run_mobi_page():
 # Suponha que os dados tenham quatro colunas: colaborador, função, atividade e data
     lista_de_listas = []
     for linha in dados:
-        lista_de_listas.append([linha[0], linha[1], linha[2], linha[3], linha [4]])
+        lista_de_listas.append([linha[0], linha[1], linha[2], linha[3], linha [4], linha[5], linha[6]])
         
-
 # Crie o dataframe a partir da lista de listas, especificando os nomes das colunas
-    df = pd.DataFrame(lista_de_listas, columns=["colaborador", "função", "atividade", "data", "responsável"])
+    df = pd.DataFrame(lista_de_listas, columns=["colaborador", "função", "atividade" , "escalado", "contrato", "data", "responsável"])
 
 # O restante do código é o mesmo que o anterior
     escolhido = []
@@ -33,14 +33,14 @@ def run_mobi_page():
         st.text("Resultado")
         df_filtrado = df[df["colaborador"].isin(escolhido)]
         st.dataframe(df_filtrado)
-        
-        
+     
         if st.button("Mobilizar"):
             if st.dataframe == "":
                 st.write("Não há ninguém para Mobilizar")
             else:
                 mobile_update()
-            
 
 if __name__ == '__run_mobi_page__':
     run_mobi_page()
+    
+    

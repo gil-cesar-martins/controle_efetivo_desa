@@ -7,7 +7,7 @@ def run_home_page():
     
     with st.expander("Clique para ver todo o efetivo"):
         result = view_all_tasks()
-        df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Data', 'Responsável'])
+        df = pd.DataFrame(result, columns=['Colaborador', 'Função', 'Atividade', 'Escalado', 'Contrato', 'Data', 'Responsável'])
         st.dataframe(df)
     
     if choice == "Efetivo":
@@ -41,7 +41,7 @@ def run_home_page():
             #search_term = st.text_input("Digite o nome ou as 4 primeiras letras")
             if st.button("Procurar"):
                 search_result = get_task_by_worker_name(search_term)
-                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
+                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Escalado','Contrato','Data','Responsável'])
                 st.dataframe(df)
                      
         elif search_choice == "Atividade":
@@ -51,7 +51,7 @@ def run_home_page():
             if st.button("Procurar"):
                 search_result = get_task_by_task_name(search_term)
                 #st.write(search_result)
-                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
+                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Escalado','Contrato','Data','Responsável'])
                 st.dataframe(df)
         else:
             data_inicio = st.date_input("Selecione uma data",format="DD/MM/YYYY")
@@ -59,7 +59,7 @@ def run_home_page():
             if st.button("Procurar"):
                 st.info("Você selecionou a data {}".format(data_search))
                 search_result = get_task_by_date(data_search)
-                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Data','Responsável'])
+                df = pd.DataFrame(search_result, columns=['Colaborador','Função','Atividade','Escalado','Contrato','Data','Responsável'])
                 st.dataframe(df) 
                 
             
