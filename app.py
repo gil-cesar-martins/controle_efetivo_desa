@@ -7,7 +7,7 @@ from home_page import run_home_page
 from post_page import run_task_page_simple, run_task_page_complete
 from manage_page import run_manage_page_complete,run_manage_page_simple
 from mobi_page import run_mobi_page
-from db_functions import create_user_password_table, add_user_data, login_user, view_all_users, query_user, get_task_by_date, get_task_by_date_by_user,view_all_tasks
+from db_functions import *
 
 from PIL import Image
 
