@@ -88,6 +88,7 @@ def edit_task_data(novo_colaborador,nova_funcao,nova_atividade,novo_escalado,nov
     dados = c.fetchall()
     return dados
 
+# Mobilização
 def mobile_update(colaborador):
     c.execute('UPDATE tasktable SET atividade = "Mobilizar" WHERE atividade = "Desmobilizar" AND colaborador = "{}"'.format(colaborador))
     conn.commit()
