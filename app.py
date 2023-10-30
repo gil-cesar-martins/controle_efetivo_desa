@@ -14,6 +14,7 @@ from PIL import Image
 # Chamando a função para criar a tabela de usuários, caso não exista
 create_user_password_table()
 
+#Chamada principal
 def main():
     username = []
     menu = ["Login"]
