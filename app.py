@@ -11,6 +11,9 @@ from db_functions import create_user_password_table, add_user_data, login_user, 
 
 from PIL import Image
 
+# Chamando a função para criar a tabela de usuários, caso não exista
+create_user_password_table()
+
 def main():
     username = []
     menu = ["Login"]
