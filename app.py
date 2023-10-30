@@ -59,12 +59,12 @@ def main():
                         result = view_all_tasks()
                         df_adm = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Escalado','Contrato','Data','Responsável'])
                         with st.expander("Ver todos os registros"):
-                            st.dataframe(df_adm)
+                            st.data_editor(df_adm)
                     else:
                         result = query_user(username)
                         df = pd.DataFrame(result, columns=['Colaborador','Função','Atividade','Escalado','Contrato','Data','Responsável'])
                         with st.expander("Ver todos os registros"):
-                                st.dataframe(df)
+                                st.data_editor(df)
                     
                     st.subheader("Selecione alguma opção",divider='rainbow')
                     task = st.selectbox("Selecione:",["Home","Atividades","Gerenciamento","Ociosidade","Sobre o App"])

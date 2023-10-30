@@ -16,8 +16,6 @@ def query_user(username):
     data = c.fetchall()
     return data
 
-
-
 # CREATE USER SECTION
 
 def create_user_password_table():
@@ -90,15 +88,25 @@ def edit_task_data(novo_colaborador,nova_funcao,nova_atividade,novo_escalado,nov
     dados = c.fetchall()
     return dados
 
-def mobile_update():
-    c.execute('SELECT * FROM tasktable where atividade = "Desmobilizar"')
-    dados = c.fetchall()
-    c.execute('UPDATE tasktable SET atividade = "Mobilizar" WHERE atividade = "Desmobilizar"')
+def mobile_update(colaborador):
+    c.execute('UPDATE tasktable SET atividade = "Mobilizar" WHERE atividade = "Desmobilizar" AND colaborador = "{}"'.format(colaborador))
     conn.commit()
+    c.execute('SELECT * FROM tasktable WHERE colaborador = "{}"'.format(colaborador))
+    dados = c.fetchall()
+    return dados
+
+def desmob():
+    c.execute('SELECT DISTINCT colaborador FROM tasktable where atividade = "Desmobilizar"')
+    dados = c.fetchall()
     return dados
 
 def mobile():
-    c.execute('SELECT * FROM tasktable where atividade = "Desmobilizar"')
+    c.execute('SELECT DISTINCT colaborador FROM tasktable where atividade = "Mobilizar"')
+    dados = c.fetchall()
+    return dados
+
+def new_mobile():
+    c.execute('SELECT DISTINCT colaborador FROM tasktable where atividade = "Desmobilizar"')
     dados = c.fetchall()
     return dados
 
@@ -107,7 +115,7 @@ def delete_data(colaborador,data):
     conn.commit()
 
 def delete_data_by_index(indice):
-    c.execute('DELETE FROM tasktable WHERE rowid = "{}"'.format(indice))
+    c.execute('DELETE FROM tasktable WHERE ROWID = "{}"'.format(indice))
     conn.commit()
 
 def get_task_by_task_name(atividade):

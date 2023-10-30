@@ -45,9 +45,13 @@ def run_manage_page_complete():
         st.dataframe(df)
         unique_list = [i[0] for i in view_all_unique_user_names()]
         delete_by_worker_name = st.selectbox("Usuário", unique_list)
-        st.warning("⚠️ Deseja excluir {} ? ⚠️".format(delete_by_worker_name))
+        if delete_by_worker_name is not None:
+            st.warning("⚠️ Deseja excluir {} ? ⚠️".format(delete_by_worker_name))
+        else:
+            st.warning("⚠️Ninguém mais para excluir!⚠️")
         if st.button("Excluir"):
             delete_user_data(delete_by_worker_name)
+            
             st.info("{} foi excluído".format(delete_by_worker_name))
         
         with st.expander("Banco de dados atual"):
@@ -60,14 +64,17 @@ def run_manage_page_complete():
         st.dataframe(df)
         unique_list = [i[0] for i in view_all_unique_worker_names()]
         delete_by_worker_name = st.selectbox("Colaborador", unique_list)
-        #data_padrao = st.date_input("Data",format='DD/MM/YYYY')
-        #data_obj = datetime.strftime(data_padrao,'%d/%m/%Y')
-        #data = data_obj
-        indice = st.text_input("Escolha o índice")
-        st.warning("⚠️ Deseja excluir {} ? ⚠️".format(delete_by_worker_name))
+        data_padrao = st.date_input("Data",format='DD/MM/YYYY')
+        data_obj = datetime.strftime(data_padrao,'%d/%m/%Y')
+        data = data_obj
+        
+        if delete_by_worker_name is not None:
+            st.warning("⚠️ Deseja excluir {} ? ⚠️".format(delete_by_worker_name))
+        else:
+            st.warning("⚠️Ninguém mais para excluir!⚠️")
+        
         if st.button("Excluir"):
-            #delete_data(delete_by_worker_name,data)
-            delete_data_by_index(indice)
+            delete_data(delete_by_worker_name,data)
             st.info("{} foi excluído".format(delete_by_worker_name))
         
         with st.expander("Banco de dados atual"):
@@ -90,14 +97,8 @@ def run_manage_page_simple():
             st.dataframe(df['Atividade'].value_counts())
             new_df = df['Atividade'].value_counts().to_frame()
             new_df = new_df.reset_index()
-            #st.dataframe(new_df)
             
             st.bar_chart(new_df,x='Atividade',y='count',use_container_width=True, color="#830b67")
    
-        #with st.expander("Banco de dados atual"):
-        #    result2 = get_task_by_date(data_search)
-        #    new_df = pd.DataFrame(result2, columns=['Colaborador','Função','Atividade','Data'])
-        #    st.dataframe(new_df)
-            
             
             

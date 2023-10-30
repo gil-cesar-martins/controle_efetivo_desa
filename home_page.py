@@ -24,12 +24,17 @@ def run_home_page():
             #st.write(task_result)
             colaborador = task_result[0][0]
             funcao = task_result[0][1]
-            #atividade = task_result[0][2]
-            #data = task_result[0][3]
+            atividade = task_result[0][2]
+            escalado = task_result[0][3]
+            data = task_result[0][5]
+            responsavel = task_result[0][6]
             st.write("Colaborador: {}".format(colaborador))
             st.text("Função: {}".format(funcao))
-            #st.text("Atividade: {}".format(atividade))
-            #st.write("Data da atividade:{}".format(data))
+            st.text("Atividade: {}".format(atividade))
+            st.write("Escalado: {}".format(escalado))
+            st.write("Data da atividade: {}".format(data))
+            st.write("Responsável: {}".format(responsavel))
+           
     
     else:
         st.subheader("Campo para buscar",divider='rainbow')
